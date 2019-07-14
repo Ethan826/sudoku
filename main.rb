@@ -21,15 +21,28 @@ class Sudoku
   INNER_LEFT = '┠'
   INNER_TOP = '┯'
   INNER_RIGHT = '┨'
+  TOP_ROW =    '┏━━━━━┯━━━━━┯━━━━━┓'
+              # ┃1 1 1 1 1 1 1 1 1┃
+  INNER_ROW =  '┠─────┼─────┼─────┨'
+  BOTTOM_ROW = '┗━━━━━┷━━━━━┷━━━━━┛'
 
-  TOP_ROW = CORNER_TOP_LEFT + TOP_THICK * 17 + CORNER_TOP_RIGHT
-  BOTTOM_ROW = CORNER_BOTTOM_LEFT + BOTTOM_THICK * 17 + CORNER_BOTTOM_RIGHT
+  # TOP_ROW = CORNER_TOP_LEFT + TOP_THICK * 17 + CORNER_TOP_RIGHT
+  # BOTTOM_ROW = CORNER_BOTTOM_LEFT + BOTTOM_THICK * 17 + CORNER_BOTTOM_RIGHT
 
   def print_game(game)
+    puts TOP_ROW
 
-    game.each_slice(9) do |row|
-      binding.pry
+    game.each_slice(9).each_with_index do |row, index|
+      print SIDE_THICK
+      interior = row.each_slice(3).map do |chunk|
+        chunk.map { |e| e || "·" }.join(" ")
+      end.to_a.join(SIDE_THIN)
+      print interior
+      puts SIDE_THICK
+      puts INNER_ROW if index == 2 || index == 5
     end
+
+    puts BOTTOM_ROW
   end
 
   def row_iterator
